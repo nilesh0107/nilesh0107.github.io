@@ -226,11 +226,54 @@
       a { color: #1a5276 !important; }
       .highlight-card { break-inside: avoid; }
       .job { break-inside: avoid; }
+      .nav-tabs { display: none; }
+    }
+
+    /* ── Navigation Tabs ── */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0;
+    }
+    .nav-tab {
+      padding: 10px 20px;
+      background: #f5f5f5;
+      border: 2px solid #e0e0e0;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+      font-size: 10pt;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      background: #eaf2fb;
+      color: #1a5276;
+    }
+    .nav-tab.active {
+      background: #fff;
+      border-color: #2e86c1;
+      color: #1a5276;
+      border-bottom: 2px solid #fff;
+      margin-bottom: -2px;
+    }
+    .nav-tab a {
+      color: inherit;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 <div class="page">
+
+  <!-- ════════════════ NAVIGATION TABS ════════════════ -->
+  <div class="nav-tabs">
+    <div class="nav-tab active"><a href="index.html">Resume</a></div>
+    <div class="nav-tab"><a href="cover-letter.html">Cover Letter</a></div>
+  </div>
 
   <!-- ════════════════ HEADER ════════════════ -->
   <header class="header">
@@ -246,8 +289,6 @@
       <span>🔗 <a href="https://in.linkedin.com/in/nileshkhakal" target="_blank">linkedin.com/in/nileshkhakal</a></span>
       <span class="sep">|</span>
       <span>GitHub: <a href="https://github.com/nilesh0107" target="_blank">github.com/nilesh0107</a></span>
-      <span class="sep">|</span>
-      <span>Cover Letter: <a href="cover-letter.html">View</a></span>
     </div>
   </header>
 

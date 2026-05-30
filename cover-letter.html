@@ -269,11 +269,87 @@
       .editable { background: none; border: none; padding: 0; }
       a { color: #1a5276 !important; }
       #editBtn { display: none !important; }
+      .nav-tabs { display: none; }
+    }
+
+    /* ── Navigation Tabs ── */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0;
+    }
+    .nav-tab {
+      padding: 10px 20px;
+      background: #f5f5f5;
+      border: 2px solid #e0e0e0;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+      font-size: 10pt;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      background: #eaf2fb;
+      color: #1a5276;
+    }
+    .nav-tab.active {
+      background: #fff;
+      border-color: #2e86c1;
+      color: #1a5276;
+      border-bottom: 2px solid #fff;
+      margin-bottom: -2px;
+    }
+    .nav-tab a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ── Toaster Notification ── */
+    .toaster {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1a5276;
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 1000;
+      font-size: 10pt;
+      max-width: 400px;
+    }
+    .toaster.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
 <div class="page">
+
+  <!-- ════════════════ TOASTER NOTIFICATION ════════════════ -->
+  <div id="toaster" class="toaster">Shareable link copied to clipboard!</div>
+
+  <!-- ════════════════ NAVIGATION TABS ════════════════ -->
+  <div class="nav-tabs">
+    <div class="nav-tab"><a href="index.html">Resume</a></div>
+    <div class="nav-tab active"><a href="cover-letter.html">Cover Letter</a></div>
+  </div>
 
   <!-- ════════════════ CUSTOMIZATION FORM ════════════════ -->
   <div class="form-section" id="customizationForm" style="display: none;">
@@ -309,6 +385,7 @@
     </div>
     <div class="form-buttons">
       <button class="btn-form btn-form-primary" onclick="printLetter()">Print / Save as PDF</button>
+      <button class="btn-form btn-form-secondary" onclick="copyShareableLink()">Copy Shareable Link</button>
       <button class="btn-form btn-form-secondary" onclick="clearForm()">Clear All Fields</button>
     </div>
   </div>
@@ -325,10 +402,8 @@
       <span>📞 <a href="tel:+918055591369">+91 80555 91369</a></span>
       <span class="sep">|</span>
       <span>🔗 <a href="https://in.linkedin.com/in/nileshkhakal" target="_blank">linkedin.com/in/nileshkhakal</a></span>
-      <span class="sep">|</span>
-      <span>📄 <a href="index.html">Resume</a></span>
     </div>
-  <div style="text-align: right; margin-bottom: 16px;">
+  <div id="editBtnContainer" style="text-align: right; margin-bottom: 16px; display: none;">
       <button class="btn-form btn-form-secondary" onclick="toggleForm()" id="editBtn" style="padding: 6px 12px; font-size: 9pt;">Edit Cover Letter</button>
     </div>
   </header>
@@ -379,7 +454,7 @@
   <div class="cta-section">
     <div class="cta-title">Quick Access</div>
     <div class="cta-buttons">
-      <a href="Nilesh_Khakal_Resume.html" class="btn btn-primary">
+      <a href="index.html" class="btn btn-primary">
         📄 View Full Resume
       </a>
       <a href="https://in.linkedin.com/in/nileshkhakal" target="_blank" class="btn btn-secondary">
@@ -400,12 +475,46 @@
 </div>
 
 <script>
-  // Set default date to today and default reason
+  // Set default date to today and default reason, or load from URL parameters
   document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('dateInput').value = today;
-    document.getElementById('reasonInput').value = 'your commitment to building innovative, user-centric products that solve real-world problems. I am excited by the opportunity to contribute my expertise in Angular, design systems, and enterprise frontend architecture to help deliver scalable, high-performance solutions that drive user engagement and business growth.';
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Load values from URL parameters if present
+    if (urlParams.get('date')) {
+      document.getElementById('dateInput').value = urlParams.get('date');
+    } else {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dateInput').value = today;
+    }
+
+    if (urlParams.get('hiringManager')) {
+      document.getElementById('hiringManagerInput').value = urlParams.get('hiringManager');
+    }
+
+    if (urlParams.get('company')) {
+      document.getElementById('companyInput').value = urlParams.get('company');
+    }
+
+    if (urlParams.get('position')) {
+      document.getElementById('positionInput').value = urlParams.get('position');
+    }
+
+    if (urlParams.get('address')) {
+      document.getElementById('addressInput').value = urlParams.get('address');
+    }
+
+    if (urlParams.get('reason')) {
+      document.getElementById('reasonInput').value = urlParams.get('reason');
+    } else {
+      document.getElementById('reasonInput').value = 'your commitment to building innovative, user-centric products that solve real-world problems. I am excited by the opportunity to contribute my expertise in Angular, design systems, and enterprise frontend architecture to help deliver scalable, high-performance solutions that drive user engagement and business growth.';
+    }
+
     updateLetter();
+
+    // Check for edit parameter in URL to show edit button
+    if (urlParams.get('edit') === 'true') {
+      document.getElementById('editBtnContainer').style.display = 'block';
+    }
   });
 
   // Update letter content when form inputs change
@@ -478,6 +587,41 @@
   // Print letter
   function printLetter() {
     window.print();
+  }
+
+  // Copy shareable link with current form values
+  function copyShareableLink() {
+    const date = document.getElementById('dateInput').value;
+    const hiringManager = document.getElementById('hiringManagerInput').value;
+    const company = document.getElementById('companyInput').value;
+    const position = document.getElementById('positionInput').value;
+    const address = document.getElementById('addressInput').value;
+    const reason = document.getElementById('reasonInput').value;
+
+    const params = new URLSearchParams();
+    if (date) params.set('date', date);
+    if (hiringManager) params.set('hiringManager', hiringManager);
+    if (company) params.set('company', company);
+    if (position) params.set('position', position);
+    if (address) params.set('address', address);
+    if (reason) params.set('reason', reason);
+
+    // Ensure edit parameter is NOT included in shareable link
+    params.delete('edit');
+
+    const shareableUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+    navigator.clipboard.writeText(shareableUrl).then(() => {
+      const toaster = document.getElementById('toaster');
+      toaster.textContent = 'Shareable link copied to clipboard!';
+      toaster.classList.add('show');
+      setTimeout(() => {
+        toaster.classList.remove('show');
+      }, 3000);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      prompt('Copy this link:', shareableUrl);
+    });
   }
 </script>
 
