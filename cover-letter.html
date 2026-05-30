@@ -22,8 +22,8 @@
 
     /* ── Page wrapper ── */
     .page {
-      max-width: 750px;
-      margin: 40px auto;
+      max-width: 820px;
+      margin: 0 auto;
       padding: 32px 40px 32px 40px;
       background: #fff;
     }
@@ -265,12 +265,12 @@
       body { font-size: 10.5pt; }
       .page { padding: 18px 28px; max-width: 100%; margin: 0; }
       .header h1 { font-size: 20pt; }
-      .cta-section { display: none; }
-      .form-section { display: none; }
+      .cta-section { display: none !important; }
+      .form-section { display: none !important; }
       .editable { background: none; border: none; padding: 0; }
       a { color: #1a5276 !important; }
       #editBtn { display: none !important; }
-      .nav-tabs { display: none; }
+      .nav-tabs { display: none !important; }
     }
 
     /* ── Navigation Tabs ── */
@@ -282,15 +282,16 @@
       padding-bottom: 0;
     }
     .nav-tab {
+      display: block;
       padding: 10px 20px;
       background: #f5f5f5;
       border: 2px solid #e0e0e0;
       border-bottom: none;
       border-radius: 6px 6px 0 0;
-      cursor: pointer;
       font-size: 10pt;
       font-weight: 600;
       color: #666;
+      text-decoration: none;
       transition: all 0.2s;
     }
     .nav-tab:hover {
@@ -303,10 +304,8 @@
       color: #1a5276;
       border-bottom: 2px solid #fff;
       margin-bottom: -2px;
-    }
-    .nav-tab a {
-      color: inherit;
-      text-decoration: none;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── Toaster Notification ── */
@@ -348,8 +347,8 @@
 
   <!-- ════════════════ NAVIGATION TABS ════════════════ -->
   <div class="nav-tabs">
-    <div class="nav-tab"><a href="index.html">Resume</a></div>
-    <div class="nav-tab active"><a href="cover-letter.html">Cover Letter</a></div>
+    <a href="index.html" class="nav-tab">Resume</a>
+    <a href="cover-letter.html" class="nav-tab active">Cover Letter</a>
   </div>
 
   <!-- ════════════════ CUSTOMIZATION FORM ════════════════ -->
@@ -426,11 +425,11 @@
     </p>
 
     <p>
-      I am writing to express my interest in the <span class="editable" id="positionDisplay">[Senior Angular Developer / Frontend Architect]</span> position at <span class="editable" id="companyDisplay2">[Company Name]</span>. With <strong>9+ years</strong> of progressive experience building enterprise-grade frontend solutions across healthcare, fintech, and SaaS domains, I bring deep expertise in <strong>Angular 2–19, NgRx state management, design systems, and HIPAA-compliant development</strong>. My recent work at Medtronic and TIAA GBS has prepared me to deliver scalable, accessible, and performant UI solutions that align with <span class="editable" id="companyDisplay3">[Company Name]</span>'s technical and business objectives.
+      I am writing to express my interest in the <span class="editable" id="positionDisplay">[Senior Angular Developer / Frontend Architect]</span> position at <span class="editable" id="companyDisplay2">[Company Name]</span>. With <strong>9+ years</strong> of progressive experience building enterprise-grade frontend solutions across healthcare, fintech, and SaaS domains, I bring deep expertise in <strong>Angular 2–20, NgRx state management, design systems, and HIPAA-compliant development</strong>. My recent work at Medtronic and TIAA GBS has prepared me to deliver scalable, accessible, and performant UI solutions that align with <span class="editable" id="companyDisplay3">[Company Name]</span>'s technical and business objectives.
     </p>
 
     <p>
-      Currently, I lead frontend development for <strong>Medtronic's HIPAA-compliant healthcare platform</strong>, where I architect reusable Angular 19 components, implement NgRx-based state management, and ensure seamless cross-platform integration for clinicians. Previously, at <strong>TIAA GBS</strong>, I served as the Subject Matter Expert for <strong>Quantum UI</strong> — a multi-theme Angular + Web Component design system adopted by <strong>5+ enterprise fintech products</strong>. I delivered 10+ production-grade components from scratch, reduced manual theme-switching effort by ~40% through CSS token architecture, and established a design-to-code workflow with UX teams using Figma.
+      Currently, I lead frontend development for <strong>Medtronic's HIPAA-compliant healthcare platform</strong>, where I architect reusable Angular 20 components, implement NgRx-based state management, and ensure seamless cross-platform integration for clinicians. Previously, at <strong>TIAA GBS</strong>, I served as the Subject Matter Expert for <strong>Quantum UI</strong> — a multi-theme Angular + Web Component design system adopted by <strong>5+ enterprise fintech products</strong>. I delivered 10+ production-grade components from scratch, reduced manual theme-switching effort by ~40% through CSS token architecture, and established a design-to-code workflow with UX teams using Figma.
     </p>
 
     <p>
@@ -507,7 +506,7 @@
     if (urlParams.get('reason')) {
       document.getElementById('reasonInput').value = urlParams.get('reason');
     } else {
-      document.getElementById('reasonInput').value = 'your commitment to building innovative, user-centric products that solve real-world problems. I am excited by the opportunity to contribute my expertise in Angular, design systems, and enterprise frontend architecture to help deliver scalable, high-performance solutions that drive user engagement and business growth.';
+      document.getElementById('reasonInput').value = 'your strong reputation for delivering innovative, user-centric solutions that solve real-world problems. I am particularly drawn to your commitment to technical excellence and your focus on creating products that make a meaningful impact. I am excited by the opportunity to contribute my expertise in Angular 20, NgRx state management, design systems, and enterprise frontend architecture to help deliver scalable, high-performance solutions that drive user engagement and business growth. I believe my experience in building HIPAA-compliant healthcare platforms and enterprise design systems aligns well with your technical challenges and culture of continuous improvement.';
     }
 
     updateLetter();
